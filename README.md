@@ -15,7 +15,7 @@ Create a production build with `npm run build`, and check the project with `npm 
 
 ## Deploy to GitHub Pages
 
-The GitHub Actions workflow in `.github/workflows/deploy.yml` builds and deploys the site whenever changes are pushed to `main`. In the repository settings, open **Pages** and set the build/deployment source to **GitHub Actions**. The production build uses the `/futanav/` base path for this repository; do not publish the `dist/` folder as the branch source.
+The GitHub Actions workflow in `.github/workflows/deploy.yml` builds the site and publishes its compiled files to the `gh-pages` branch whenever changes are pushed to `main`. In repository settings, open **Pages** and select **Deploy from a branch**, then set the branch to `gh-pages` and the folder to `/(root)`. The production build uses the `/futanav/` base path for this repository.
 
 Commit and push project changes to `main` to trigger deployment. GitHub shows the published address and deployment status under **Actions** and **Settings → Pages**. The map uses online Esri imagery, so the basemap still requires an internet connection even though the PWA caches app files and campus data.
 
