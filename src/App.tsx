@@ -1,6 +1,5 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState, type FormEvent } from 'react'
 import {
-  ArrowDownUp,
   ArrowRight,
   Building2,
   Check,
@@ -421,8 +420,6 @@ function App() {
 
             <div className="route-preferences">
               <span className="walk-chip"><Footprints size={16} /> Walking</span>
-              <span className="preference-note">Walking route</span>
-              <ArrowDownUp className="swap-icon" size={16} aria-hidden="true" />
             </div>
             <button className="route-button" type="submit" disabled={!campusData}>Find my route <ArrowRight size={18} /></button>
             {message && <p className="form-message" role="status">{message}</p>}

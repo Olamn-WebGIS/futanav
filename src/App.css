@@ -68,8 +68,6 @@ a { color: inherit; text-decoration: none; }
 .connector { position: absolute; top: 46px; left: 24px; width: 1px; height: 24px; border-left: 1px dashed #c4d0c4; z-index: 1; }
 .route-preferences { display: flex; align-items: center; gap: 10px; padding: 14px 1px 14px; }
 .walk-chip { display: inline-flex; align-items: center; gap: 6px; color: #496a50; background: #eff6ed; border: 1px solid #e2eddf; padding: 6px 9px; border-radius: 6px; font-size: 10px; font-weight: 700; }
-.preference-note { font-size: 10px; color: #8c968e; }
-.swap-icon { margin-left: auto; color: #a1aaa2; }
 .route-button { min-height: 44px; width: 100%; border: 0; border-radius: 8px; background: var(--green); color: white; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; transition: background .2s, transform .2s; }
 .route-button:hover { background: var(--green-dark); transform: translateY(-1px); }
 .route-button:active { transform: translateY(0); }
@@ -248,14 +246,14 @@ a { color: inherit; text-decoration: none; }
   .topbar { height: 70px; gap: 10px; }
   .brand { min-width: 0; }
   .brand-mark { width: 37px; height: 37px; border-radius: 12px; }
-  .install-app-button { margin-left: auto; padding: 8px; font-size: 0; gap: 0; }
+  .install-app-button { margin-left: 0; padding: 8px; font-size: 0; gap: 0; }
   .install-app-button svg { width: 17px; height: 17px; }
   .top-links { display: none; position: absolute; top: 61px; right: 0; height: auto; width: 190px; padding: 8px; background: white; border: 1px solid #e5eae2; border-radius: 9px; box-shadow: 0 10px 24px #1e31211c; }
   .top-links.is-open { display: grid; gap: 0; }
   .top-links a { height: auto; padding: 11px 10px; border-radius: 6px; }
   .top-links a.active::after { display: none; }
   .top-links a.active { background: #eff5ed; }
-  .mobile-menu { width: 34px; height: 34px; padding: 0; display: grid; place-items: center; color: #536c57; cursor: pointer; }
+  .mobile-menu { width: 34px; height: 34px; margin-left: auto; padding: 0; display: grid; place-items: center; color: #536c57; cursor: pointer; }
   .workspace { display: flex; flex-direction: column; gap: 17px; padding: 21px 0 16px; }
   .sidebar { min-height: 0; padding: 4px 0 0; }
   .welcome-block { padding: 0 5px; }
