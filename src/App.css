@@ -161,11 +161,13 @@ a { color: inherit; text-decoration: none; }
 .search-suggestions button span { flex: 1; }
 .destination-wrap { position: relative; }
 .map-toolbar { height: 57px; flex: 0 0 57px; display: flex; align-items: center; justify-content: space-between; padding: 0 18px; border-bottom: 1px solid #edf0ea; }
+.map-toolbar-actions { display: flex; align-items: center; gap: 8px; }
 .map-title { display: flex; gap: 9px; align-items: center; color: #35483a; font-size: 12px; font-weight: 700; }
 .map-title > svg { color: #5b8865; }
 .map-tag { margin-left: 3px; color: #849a74; background: #f1f5ec; border-radius: 4px; padding: 4px 6px; font-size: 8px; letter-spacing: .8px; }
 .map-control { width: 31px; height: 31px; display: grid; place-items: center; border: 1px solid #e7ece4; background: #fff; color: #6f8b73; border-radius: 7px; cursor: pointer; }
 .map-control:hover { background: #f3f7f1; }
+.map-fullscreen-control { display: none; }
 .map-art { position: relative; min-height: 0; flex: 1; overflow: hidden; background-color: #f2f4e9; background-image: radial-gradient(#dae1ce 0.7px, transparent .7px); background-size: 18px 18px; }
 .map-lines { position: absolute; inset: 0; width: 100%; height: 100%; }
 .green-space { fill: #e6ecd9; opacity: .88; }
@@ -267,6 +269,8 @@ a { color: inherit; text-decoration: none; }
   .quick-icon { width: 27px; height: 27px; flex: 0 0 27px; }
   .sidebar-footer { display: none; }
   .map-panel { min-height: 450px; height: 57vh; }
+  .map-fullscreen-control { display: grid; }
+  .map-panel.is-fullscreen { position: fixed; inset: 0; z-index: 10000; width: 100vw; height: 100vh; height: 100dvh; min-height: 0; padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom); border: 0; border-radius: 0; }
   .map-art { min-height: 0; }
   .map-bottom-bar { min-height: 65px; padding: 11px; }
   .map-bottom-bar p { max-width: 260px; line-height: 1.5; }

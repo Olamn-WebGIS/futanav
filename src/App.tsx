@@ -66,6 +66,7 @@ function App() {
   const [completedRouteSteps, setCompletedRouteSteps] = useState(0)
   const [message, setMessage] = useState('')
   const [menuOpen, setMenuOpen] = useState(false)
+  const [mapFullscreen, setMapFullscreen] = useState(false)
   const [installPromptEvent, setInstallPromptEvent] = useState<BeforeInstallPromptEvent | null>(null)
   const [mapResetKey, setMapResetKey] = useState(0)
   const locationWatchRef = useRef<number | null>(null)
@@ -76,6 +77,20 @@ function App() {
   useEffect(() => () => {
     if (locationWatchRef.current !== null) navigator.geolocation?.clearWatch(locationWatchRef.current)
   }, [])
+
+  useEffect(() => {
+    if (!mapFullscreen) return
+    const previousOverflow = document.body.style.overflow
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMapFullscreen(false)
+    }
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [mapFullscreen])
 
   useEffect(() => {
     const handleBeforeInstallPrompt = (event: Event) => {
@@ -481,6 +496,8 @@ function App() {
                 data={campusData}
                 selectedBuildingId={selectedBuildingId}
                 route={route}
+                  isFullscreen={mapFullscreen}
+                  onToggleFullscreen={() => setMapFullscreen((fullscreen) => !fullscreen)}
                   currentLocation={currentLocation}
                   currentHeading={currentHeading}
                 onSelectBuilding={(id) => {
@@ -510,7 +527,7 @@ function App() {
         <div className="info-intro">
           <span className="eyebrow">A SIMPLE CAMPUS FLOW</span>
           <h2 id="how-heading">From “where?” to a route preview.</h2>
-          <p>Look up a mapped place, check the suggested walk, and use your own judgement as you make your way around campus.</p>
+          <p>Look up a mapped place, check the suggested walk, and follow the map route to make your way around campus.</p>
         </div>
         <div className="how-steps">
           <article className="how-step">

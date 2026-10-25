@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { CircleMarker, MapContainer, Marker, Pane, Polygon, Polyline, Popup, TileLayer, Tooltip, useMap } from 'react-leaflet'
-import { Compass, LocateFixed, MapPinned } from 'lucide-react'
+import { Compass, LocateFixed, MapPinned, Maximize2, Minimize2 } from 'lucide-react'
 import { divIcon, latLngBounds, point, type LatLngExpression, type Polyline as LeafletPolyline } from 'leaflet'
 import 'leaflet-textpath'
 import proj4 from 'proj4'
@@ -10,6 +10,8 @@ type CampusMapProps = {
   data: CampusData
   selectedBuildingId: string | null
   route: CampusRoute | null
+  isFullscreen: boolean
+  onToggleFullscreen: () => void
   currentLocation: XY | null
   currentHeading: number
   resetKey: number
@@ -90,6 +92,17 @@ function TrackMapZoom({ onZoomChange }: { onZoomChange: (zoom: number) => void }
   return null
 }
 
+function RefreshMapSize({ trigger }: { trigger: boolean }) {
+  const map = useMap()
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => map.invalidateSize({ pan: false }))
+    return () => cancelAnimationFrame(frame)
+  }, [map, trigger])
+
+  return null
+}
+
 function CampusBoundaryView({ data }: { data: CampusData }) {
   const map = useMap()
   const [maskRings, setMaskRings] = useState<LatLngExpression[][] | null>(null)
@@ -164,7 +177,7 @@ function RoadNameLine({ road, showName, zoom }: { road: CampusRoad; showName: bo
   return <Polyline ref={lineRef} positions={road.coordinates.map(toLatLng)} pathOptions={{ color: 'transparent', opacity: 0, weight: 3 }} />
 }
 
-function CampusMapPreview({ data, selectedBuildingId, route, currentLocation, currentHeading, resetKey, onSelectBuilding, onMapControl }: CampusMapProps) {
+function CampusMapPreview({ data, selectedBuildingId, route, isFullscreen, onToggleFullscreen, currentLocation, currentHeading, resetKey, onSelectBuilding, onMapControl }: CampusMapProps) {
   const [mapZoom, setMapZoom] = useState(0)
   const campusPoints = [
     ...data.buildings.map((building) => building.coordinate),
@@ -172,10 +185,15 @@ function CampusMapPreview({ data, selectedBuildingId, route, currentLocation, cu
   ]
   const campusBounds = campusPoints.map(toLatLng)
   return (
-    <section className="map-panel" aria-label="FUTA campus map">
+    <section className={`map-panel${isFullscreen ? ' is-fullscreen' : ''}`} aria-label="FUTA campus map">
       <div className="map-toolbar">
         <div className="map-title"><MapPinned size={18} /><span>FUTA campus map</span><span className="map-tag">CAMPUS PLACES</span></div>
-        <button className="map-control" type="button" onClick={onMapControl} aria-label="Show all campus buildings"><LocateFixed size={17} /></button>
+        <div className="map-toolbar-actions">
+          <button className="map-control" type="button" onClick={onMapControl} aria-label="Show all campus buildings"><LocateFixed size={17} /></button>
+          <button className="map-control map-fullscreen-control" type="button" onClick={onToggleFullscreen} aria-label={isFullscreen ? 'Exit full screen map' : 'View map full screen'} aria-pressed={isFullscreen}>
+            {isFullscreen ? <Minimize2 size={17} /> : <Maximize2 size={17} />}
+          </button>
+        </div>
       </div>
 
       <div className="map-art map-live">
@@ -187,6 +205,7 @@ function CampusMapPreview({ data, selectedBuildingId, route, currentLocation, cu
           />
           <FitCampusView data={data} route={route} resetKey={resetKey} />
           <TrackMapZoom onZoomChange={setMapZoom} />
+          <RefreshMapSize trigger={isFullscreen} />
           <CampusBoundaryView data={data} />
 
           {data.boundary.map((polygon, index) => (
